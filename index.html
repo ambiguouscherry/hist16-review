@@ -1,0 +1,349 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>HIST 16 Unit Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans+Condensed:wght@400;500;600&display=swap">
+<style>
+/* Layout: a single study desk column; mode tabs on top, one working surface below. */
+:root{
+  --bg:#eef0f3; --surface:#ffffff; --ink:#1b2130; --muted:#5a6275; --line:#d4d8e0;
+  --accent:#2c3f7a; --accent-soft:#e2e7f4; --gold:#9a6a12; --gold-soft:#f5ead2;
+  --good:#2f6b46; --good-soft:#e1f0e6; --bad:#9b3434; --bad-soft:#f6e3e3;
+  --display:"Newsreader", Georgia, "Times New Roman", serif;
+  --ui:"IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12151d; --surface:#1b202b; --ink:#e7e9ef; --muted:#9aa1b2; --line:#2e3545;
+  --accent:#9fb2ec; --accent-soft:#252f4b; --gold:#e0b25a; --gold-soft:#3a2f18;
+  --good:#7fcb9a; --good-soft:#1c3427; --bad:#ec9a9a; --bad-soft:#3d2224; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151d; --surface:#1b202b; --ink:#e7e9ef; --muted:#9aa1b2; --line:#2e3545;
+  --accent:#9fb2ec; --accent-soft:#252f4b; --gold:#e0b25a; --gold-soft:#3a2f18;
+  --good:#7fcb9a; --good-soft:#1c3427; --bad:#ec9a9a; --bad-soft:#3d2224; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--display);font-size:17px;line-height:1.5;padding:0 16px}
+.wrap{max-width:860px;margin:0 auto;padding-block:28px 64px;display:flex;flex-direction:column;gap:22px}
+header h1{font-size:clamp(28px,5vw,40px);font-weight:600;margin:0;line-height:1.1;text-wrap:balance}
+header p{margin:6px 0 0;color:var(--muted);max-width:62ch}
+.eyebrow{font-family:var(--ui);text-transform:uppercase;letter-spacing:.09em;font-size:12px;color:var(--gold);font-weight:600}
+button{font:inherit;cursor:pointer;color:inherit}
+button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid var(--line)}
+.tab{font-family:var(--ui);font-size:15px;font-weight:500;background:none;border:0;border-bottom:3px solid transparent;padding:10px 12px;color:var(--muted)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-family:var(--ui);font-size:14px;color:var(--muted)}
+.bar select{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink)}
+.bar .spacer{flex:1}
+.btn{font-family:var(--ui);font-size:15px;font-weight:500;padding:9px 16px;border-radius:6px;border:1px solid var(--line);background:var(--surface)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn:hover{border-color:var(--accent)}
+.row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.chip{font-family:var(--ui);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent);font-weight:600}
+
+/* Flashcards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;min-height:270px;padding:28px;display:flex;flex-direction:column;gap:14px;justify-content:center;align-items:center;text-align:center;width:100%}
+.card .term{font-size:clamp(26px,5vw,38px);font-weight:600;line-height:1.15;text-wrap:balance}
+.card .def{max-width:58ch;text-align:left}
+.card .why{max-width:58ch;text-align:left;font-style:italic;color:var(--muted);font-size:15.5px;border-top:1px solid var(--line);padding-top:12px}
+.hint{font-family:var(--ui);font-size:13px;color:var(--muted)}
+.meter{height:6px;background:var(--line);border-radius:99px;overflow:hidden;flex:1;min-width:120px}
+.meter i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s}
+
+/* Quiz */
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:14px}
+.q .prompt{font-size:19px}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg);font-size:16px}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.right{background:var(--good-soft);border-color:var(--good);color:var(--ink)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.opt:disabled{cursor:default}
+.feedback{font-size:15.5px;border-left:3px solid var(--gold);padding:4px 0 4px 12px;color:var(--muted)}
+.score{font-variant-numeric:tabular-nums}
+
+/* Match */
+.match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:10px}
+.match .col{display:flex;flex-direction:column;gap:8px}
+.tile{text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:15px;line-height:1.35;min-height:52px}
+.tile.t{font-weight:600;font-size:16px}
+.tile.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.tile.done{background:var(--good-soft);border-color:var(--good);opacity:.75;cursor:default}
+.tile.miss{animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@media (prefers-reduced-motion:reduce){.tile.miss{animation:none}.meter i{transition:none}}
+@media (max-width:560px){.match{grid-template-columns:1fr}}
+
+/* Essays */
+.essay{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px 24px;display:flex;flex-direction:column;gap:12px}
+.essay h3{margin:0;font-size:20px;font-weight:600;text-wrap:balance}
+.essay ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.essay .terms{display:flex;flex-wrap:wrap;gap:6px}
+.essay textarea{width:100%;min-height:110px;font:inherit;font-size:15.5px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);resize:vertical}
+.essay .num{font-family:var(--ui);font-weight:600;color:var(--gold);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.done-panel{text-align:center;padding:30px;background:var(--surface);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;gap:12px;align-items:center}
+.done-panel .big{font-size:44px;font-weight:600;font-variant-numeric:tabular-nums}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">HIST 16 · Unit review</div>
+    <h1>Africa, the Atlantic, and Colonial Slavery</h1>
+    <p>Study the key terms four ways: flip the cards, match terms to meanings, take a quiz, then outline the five essay questions.</p>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" data-mode="cards" aria-selected="true">Flashcards</button>
+    <button class="tab" role="tab" data-mode="match" aria-selected="false">Match</button>
+    <button class="tab" role="tab" data-mode="quiz" aria-selected="false">Quiz</button>
+    <button class="tab" role="tab" data-mode="essay" aria-selected="false">Essay prep</button>
+  </nav>
+
+  <div class="bar" id="filterBar">
+    <label for="topic">Topic</label>
+    <select id="topic">
+      <option value="all">All terms</option>
+      <option value="method">Studying history</option>
+      <option value="africa">African kingdoms</option>
+      <option value="atlantic">The Atlantic slave trade</option>
+      <option value="colonies">Slavery in the colonies</option>
+    </select>
+    <span class="spacer"></span>
+    <span id="status"></span>
+  </div>
+
+  <main id="stage"></main>
+</div>
+
+<script>
+const TERMS = [
+  // Studying history
+  {t:"Historiography", c:"method", d:"The study of how history has been written: how historians' questions, sources, and interpretations have changed over time.", w:"Example: historians once called slavery a paternal system; later scholars, using enslaved people's own accounts, rewrote that story."},
+  {t:"Hegemony", c:"method", d:"Dominance of one group, state, or culture over others, maintained through ideas and institutions as well as force.", w:"European powers built hegemony in the Atlantic world partly by spreading ideas of racial hierarchy."},
+  {t:"Primary source", c:"method", d:"Evidence created at the time being studied, by people who lived it: letters, laws, ship logs, narratives, artifacts.", w:"Equiano's 1789 narrative and the Virginia slave codes are primary sources."},
+  {t:"Secondary source", c:"method", d:"A later work that analyzes and interprets primary sources, such as a textbook or a historian's book.", w:"Eric Williams's Capitalism and Slavery (1944) is a secondary source."},
+  // African kingdoms
+  {t:"KMT (Kemet)", c:"africa", d:"The ancient Egyptians' own name for Egypt, meaning \"the black land\" after the dark, fertile soil of the Nile.", w:"Using the name Kemet places Egypt within African history rather than apart from it."},
+  {t:"Dynasty", c:"africa", d:"A series of rulers from the same family who hold power over generations.", w:"Egypt's 25th Dynasty was ruled by kings from Kush."},
+  {t:"Ptahhotep & the Teachings of Ptahhotep", c:"africa", d:"An Egyptian vizier (c. 2400s BCE) credited with one of the oldest surviving books of wisdom literature, advising humility, justice, and self-control.", w:"Shows a long tradition of African philosophy and written ethics."},
+  {t:"Kush", c:"africa", d:"A Nubian kingdom south of Egypt along the Nile, centered at Napata and later Meroë; known for iron working, and its kings ruled Egypt as the 25th Dynasty.", w:""},
+  {t:"Axum", c:"africa", d:"A trading kingdom in present-day Ethiopia and Eritrea; under King Ezana (4th century CE) it became one of the first states to adopt Christianity.", w:"Axum minted its own coins and traded across the Red Sea and Indian Ocean."},
+  {t:"Ghana", c:"africa", d:"The first great West African trading empire (c. 300–1076 CE), called \"the land of gold\"; it taxed the trans-Saharan trade in gold and salt.", w:""},
+  {t:"Mali", c:"africa", d:"West African empire (c. 1235–1600) founded by Sundiata; grew rich on gold and trans-Saharan trade and became a center of Islamic learning.", w:""},
+  {t:"Sundiata", c:"africa", d:"Founder of the Mali Empire (c. 1235), remembered in the Epic of Sundiata told by griots.", w:"He defeated the Sosso king Sumanguru at the Battle of Kirina."},
+  {t:"Mansa Musa", c:"africa", d:"Ruler of Mali whose 1324 pilgrimage to Mecca carried so much gold that it lowered gold's value in Cairo; he built mosques and schools in Timbuktu.", w:"Put Mali on European maps, like the 1375 Catalan Atlas."},
+  {t:"Timbuktu", c:"africa", d:"City on the Niger River that became a major center of trade, scholarship, and manuscripts under Mali and Songhai, home to the Sankore mosque and university.", w:""},
+  {t:"Songhai", c:"africa", d:"The largest West African empire (c. 1460s–1591), expanded by Sunni Ali and Askia Muhammad; it fell to a Moroccan invasion in 1591.", w:""},
+  {t:"Kongo", c:"africa", d:"Central African kingdom that made contact with Portugal in 1483 and converted to Christianity; Portuguese demand for captives later destabilized it.", w:""},
+  {t:"Nzinga Mbemba", c:"africa", d:"King of Kongo, baptized Afonso I (r. 1509–1543); a Christian ally of Portugal who wrote to the Portuguese king in 1526 protesting the kidnapping of his people into slavery.", w:"His letters are early primary sources showing African resistance to the slave trade."},
+  // Atlantic trade
+  {t:"Treaty of Tordesillas", c:"atlantic", d:"1494 agreement in which Spain and Portugal divided newly claimed lands along a line west of the Cape Verde Islands; Portugal got Africa and Brazil.", w:"Explains why Portugal dominated the early African coast trade."},
+  {t:"Mercantilism", c:"atlantic", d:"An economic system in which colonies exist to enrich the home country by supplying raw materials and buying its manufactured goods.", w:"Enslaved labor produced the sugar, tobacco, and cotton mercantilism depended on."},
+  {t:"Capitalism & enslavement", c:"atlantic", d:"The argument that profits from slavery and the slave trade helped build modern capitalism through banking, insurance, shipping, and industry.", w:"Associated with Eric Williams, Capitalism and Slavery (1944)."},
+  {t:"Factories", c:"atlantic", d:"Fortified European trading posts on the West African coast, such as Elmina, where captives were held before being loaded onto ships.", w:"Not industrial factories: these were warehouses and forts run by \"factors\" (agents)."},
+  {t:"Middle Passage", c:"atlantic", d:"The forced voyage of enslaved Africans across the Atlantic to the Americas, the second leg of the triangle trade, marked by crowding, disease, and high death rates.", w:"Roughly 12.5 million people were embarked; about 1.8 million died at sea."},
+  {t:"Seasoning process", c:"atlantic", d:"A period of one to three years, often in the Caribbean, in which newly arrived Africans were forced to adjust to new labor, climate, language, and diseases through violence and control.", w:"Many died during seasoning, by some estimates up to a third."},
+  {t:"Triangle trade", c:"atlantic", d:"The three-part Atlantic trade route: manufactured goods from Europe to Africa, enslaved Africans to the Americas, and raw materials such as sugar back to Europe.", w:""},
+  {t:"Trans-Atlantic Slave Trade", c:"atlantic", d:"The forced transport of millions of Africans to the Americas from the 1500s to the 1800s, the largest forced migration in history.", w:""},
+  {t:"Industrial Revolution", c:"atlantic", d:"The shift to machine production that began in Britain in the late 1700s, especially in textiles.", w:"It depended on slave-grown cotton and was partly financed by slave-trade profits."},
+  // Colonies
+  {t:"Indentured servant", c:"colonies", d:"A person who signed a contract to work for a set term, usually 4–7 years, in exchange for passage to the colonies, and was freed at the end of the term.", w:"The main labor force in the early Chesapeake before slavery replaced it."},
+  {t:"Spirits", c:"colonies", d:"Recruiters who tricked, coerced, or kidnapped poor Europeans into indentured servitude in the colonies.", w:""},
+  {t:"Creoles", c:"colonies", d:"People born in the Americas, or Africans of mixed Atlantic culture; Atlantic creoles were early Black arrivals who often knew European languages and customs.", w:"Historian Ira Berlin used the term for the first generations of Africans in the colonies."},
+  {t:"Africans and the Chesapeake", c:"colonies", d:"Africans arrived in Virginia in 1619; at first their status was unclear and some became free, but by the late 1600s the tobacco colonies had turned to racial, lifelong slavery.", w:""},
+  {t:"Anthony Johnson", c:"colonies", d:"An African who arrived in Virginia in 1621 as a servant, gained freedom, and became a landowner; in 1655 a court let him keep John Casor as a servant for life.", w:"His life shows how fluid race and status were before slave codes hardened."},
+  {t:"Chattel slavery", c:"colonies", d:"Slavery in which a person is legally owned as property for life and the status passes to their children; in the colonies it was tied to race.", w:"Different from most West African slavery, which was often not hereditary or racial."},
+  {t:"Slave codes", c:"colonies", d:"Colonial laws that defined enslaved people as property and controlled their lives, such as Virginia's 1662 law making a child's status follow the mother.", w:"Also: 1667, baptism does not free; 1705, Virginia's comprehensive code."},
+  {t:"Manumission", c:"colonies", d:"The act of an enslaver legally freeing an enslaved person.", w:"Colonies increasingly restricted it over time."},
+  {t:"Bacon's Rebellion", c:"colonies", d:"A 1676 uprising in Virginia led by Nathaniel Bacon in which poor white and Black servants joined against Governor Berkeley.", w:"Afterward, planters turned toward African slavery and used race to divide poor workers."},
+  {t:"Stono Rebellion", c:"colonies", d:"The largest slave revolt in the British mainland colonies (1739, South Carolina), led by Kongolese men who marched toward freedom in Spanish Florida.", w:"Led to the harsh Negro Act of 1740."},
+  {t:"Pinkster", c:"colonies", d:"A Dutch Pentecost holiday in New York and New Jersey that enslaved Africans turned into a festival of African music, dance, and community.", w:"A form of cultural survival and expression in the northern colonies."},
+  {t:"Olaudah Equiano", c:"colonies", d:"An African writer who described his kidnapping, the Middle Passage, and slavery in his 1789 narrative, and later bought his freedom and worked as an abolitionist.", w:"His book is one of the most cited primary sources on the Middle Passage."},
+  {t:"Abolitionists", c:"colonies", d:"People who worked to end slavery and the slave trade, including Quakers, formerly enslaved writers, and free Black activists.", w:""}
+];
+
+const ESSAYS = [
+  {q:"Evaluate the relationship between the Atlantic slave trade and the Industrial Revolution.",
+   points:["Slave-trade and plantation profits flowed into British banks, insurance, and shipping, supplying capital for industry (Eric Williams's thesis).","Enslaved labor grew the cotton that fed British textile mills, the leading industry of the Industrial Revolution.","Manufactured goods such as cloth and guns were traded in Africa for captives, creating demand for factories at home.","Historiography: some historians argue slavery's profits were too small to cause industrialization; weigh both sides."],
+   terms:["Triangle trade","Mercantilism","Capitalism & enslavement","Industrial Revolution","Historiography"]},
+  {q:"Describe the seasoning process.",
+   points:["A period of about one to three years after arrival, often in the Caribbean.","Purpose: break resistance and force adjustment to plantation labor, a new language, climate, and diseases.","Methods included violence, renaming, and separating people who shared a language.","Very high death rates; it followed the trauma of the Middle Passage."],
+   terms:["Seasoning process","Middle Passage","Trans-Atlantic Slave Trade"]},
+  {q:"Explain the evolution of servitude in the US. What is chattel slavery? How is the law used to reinforce it?",
+   points:["Early Chesapeake relied on indentured servants, white and Black, who could become free (Anthony Johnson).","Bacon's Rebellion (1676) showed planters the danger of united poor workers; they turned to African slaves.","Chattel slavery: lifelong, hereditary, people owned as property, tied to race.","Laws locked it in: 1662 status follows the mother; 1667 baptism doesn't free; 1705 Virginia slave code; limits on manumission."],
+   terms:["Indentured servant","Anthony Johnson","Bacon's Rebellion","Chattel slavery","Slave codes","Manumission"]},
+  {q:"Compare and contrast slavery in West Africa vs. the American colonies.",
+   points:["West Africa: slaves were often war captives or debtors; status was usually not permanent or inherited, and could end through marriage or adoption into the family.","Enslaved people in Africa could hold some rights and positions; slavery was not based on race.","Colonies: chattel slavery was lifelong, hereditary, and racial, with people treated as property for plantation profit.","Similarity: both involved forced labor and loss of freedom; African rulers like those in Kongo were drawn into supplying the Atlantic trade."],
+   terms:["Chattel slavery","Kongo","Nzinga Mbemba","Factories"]},
+  {q:"Compare and contrast slavery in the northern colonies with slavery in the southern colonies.",
+   points:["North: smaller numbers, often one or two enslaved people per household, working in ports, trades, farms, and homes.","South: large plantation economies (tobacco, rice, indigo) with Black majorities in places like South Carolina.","North allowed some cultural spaces such as Pinkster; South had harsher codes, especially after Stono (1739).","Both were legal and brutal; northern merchants also profited from the slave trade."],
+   terms:["Pinkster","Stono Rebellion","Slave codes","Africans and the Chesapeake"]}
+];
+
+const CAT_LABEL = {method:"Studying history", africa:"African kingdoms", atlantic:"Atlantic trade", colonies:"Colonial slavery"};
+const $ = s => document.querySelector(s);
+const stage = $("#stage"), status = $("#status");
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const esc = s => s.replace(/[&<>"]/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
+const store = {
+  get(k,f){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):f; }catch(e){ return f; } },
+  set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+};
+let known = new Set(store.get("h16-known", []));
+let mode = "cards";
+const pool = () => { const c=$("#topic").value; return c==="all"?TERMS:TERMS.filter(x=>x.c===c); };
+
+/* ---------- Flashcards ---------- */
+let deck=[], idx=0, flipped=false;
+function startCards(){ deck = shuffle(pool().filter(x=>!known.has(x.t))); if(!deck.length) deck=[]; idx=0; flipped=false; renderCards(); }
+function renderCards(){
+  const all = pool(), k = all.filter(x=>known.has(x.t)).length;
+  status.innerHTML = `<span class="score">${k} / ${all.length} known</span>`;
+  if (!deck.length || idx>=deck.length){
+    stage.innerHTML = `<div class="done-panel"><div class="eyebrow">Deck complete</div><div class="big">${k} / ${all.length}</div><p>${k===all.length?"You marked every term in this topic as known.":"Go through the terms you're still learning again."}</p><div class="row"><button class="btn primary" id="again">Review remaining</button><button class="btn" id="reset">Reset progress</button></div></div>`;
+    $("#again").onclick = startCards;
+    $("#reset").onclick = () => { pool().forEach(x=>known.delete(x.t)); store.set("h16-known",[...known]); startCards(); };
+    return;
+  }
+  const x = deck[idx];
+  stage.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="bar"><span>Card ${idx+1} of ${deck.length}</span><div class="meter"><i style="width:${(k/all.length*100).toFixed(0)}%"></i></div></div>
+      <button class="card" id="card" aria-label="Flip card">
+        <span class="chip">${CAT_LABEL[x.c]}</span>
+        ${flipped
+          ? `<div class="term" style="font-size:22px">${esc(x.t)}</div><div class="def">${esc(x.d)}</div>${x.w?`<div class="why">${esc(x.w)}</div>`:""}`
+          : `<div class="term">${esc(x.t)}</div><div class="hint">Say the definition out loud, then tap to check</div>`}
+      </button>
+      <div class="row">
+        ${flipped
+          ? `<button class="btn" id="learn">Still learning</button><button class="btn primary" id="got">I knew it</button>`
+          : `<button class="btn primary" id="flip">Show definition</button>`}
+      </div>
+      <div class="hint" style="text-align:center">Keyboard: Space to flip · 1 still learning · 2 knew it</div>
+    </div>`;
+  $("#card").onclick = flip;
+  if (flipped){ $("#learn").onclick=()=>answer(false); $("#got").onclick=()=>answer(true); }
+  else $("#flip").onclick = flip;
+}
+function flip(){ flipped=!flipped; renderCards(); }
+function answer(ok){
+  const x = deck[idx];
+  if (ok){ known.add(x.t); } else { known.delete(x.t); }
+  store.set("h16-known",[...known]);
+  idx++; flipped=false; renderCards();
+}
+
+/* ---------- Match ---------- */
+let mSet=[], mSel=null, mDone=0, mMiss=0;
+function startMatch(){
+  mSet = shuffle(pool()).slice(0,6); mSel=null; mDone=0; mMiss=0;
+  const terms = shuffle(mSet), defs = shuffle(mSet);
+  stage.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <p class="hint" style="margin:0">Tap a term, then the definition that fits it.</p>
+      <div class="match">
+        <div class="col">${terms.map(x=>`<button class="tile t" data-k="${esc(x.t)}" data-side="t">${esc(x.t)}</button>`).join("")}</div>
+        <div class="col">${defs.map(x=>`<button class="tile" data-k="${esc(x.t)}" data-side="d">${esc(x.d)}</button>`).join("")}</div>
+      </div>
+      <div class="row"><button class="btn" id="newRound">New round</button></div>
+    </div>`;
+  stage.querySelectorAll(".tile").forEach(b=>b.onclick=()=>pick(b));
+  $("#newRound").onclick = startMatch;
+  matchStatus();
+}
+function matchStatus(){ status.innerHTML = `<span class="score">${mDone} / ${mSet.length} matched · ${mMiss} misses</span>`; }
+function pick(b){
+  if (b.classList.contains("done")) return;
+  if (!mSel || mSel.dataset.side===b.dataset.side){
+    if (mSel) mSel.classList.remove("sel");
+    mSel = (mSel===b)?null:b; if (mSel) b.classList.add("sel"); return;
+  }
+  if (mSel.dataset.k===b.dataset.k){
+    [mSel,b].forEach(e=>{e.classList.remove("sel");e.classList.add("done");e.disabled=true;});
+    mDone++;
+  } else {
+    mMiss++;
+    [mSel,b].forEach(e=>{e.classList.remove("sel","miss");void e.offsetWidth;e.classList.add("miss");});
+  }
+  mSel=null; matchStatus();
+  if (mDone===mSet.length){
+    const end=document.createElement("div"); end.className="done-panel";
+    end.innerHTML=`<div class="eyebrow">Round complete</div><p style="margin:0">All six matched with ${mMiss} ${mMiss===1?"miss":"misses"}.</p><button class="btn primary" id="nextRound">Next round</button>`;
+    stage.firstElementChild.prepend(end); $("#nextRound").onclick=startMatch;
+  }
+}
+
+/* ---------- Quiz ---------- */
+let qs=[], qi=0, qRight=0, qMissed=[];
+function startQuiz(){
+  const p = pool(); qs = shuffle(p).slice(0, Math.min(10,p.length)).map(x=>{
+    const reverse = Math.random()<.5;
+    const distract = shuffle(TERMS.filter(y=>y.t!==x.t && (y.c===x.c || Math.random()<.3))).slice(0,3);
+    return {x, reverse, opts: shuffle([x,...distract])};
+  });
+  qi=0; qRight=0; qMissed=[]; renderQuiz();
+}
+function renderQuiz(){
+  status.innerHTML = `<span class="score">Score ${qRight} / ${qi}</span>`;
+  if (qi>=qs.length){
+    stage.innerHTML = `<div class="done-panel"><div class="eyebrow">Quiz finished</div><div class="big">${qRight} / ${qs.length}</div>
+      ${qMissed.length?`<div style="text-align:left;max-width:58ch"><p style="margin:0 0 6px"><strong>Review these:</strong></p><ul style="margin:0;padding-left:20px">${qMissed.map(x=>`<li><strong>${esc(x.t)}</strong>: ${esc(x.d)}</li>`).join("")}</ul></div>`:`<p style="margin:0">A perfect score on this topic.</p>`}
+      <button class="btn primary" id="retake">New quiz</button></div>`;
+    $("#retake").onclick=startQuiz; return;
+  }
+  const {x,reverse,opts} = qs[qi];
+  stage.innerHTML = `<div class="q">
+    <div class="bar"><span>Question ${qi+1} of ${qs.length}</span><span class="spacer"></span><span class="chip">${CAT_LABEL[x.c]}</span></div>
+    <div class="prompt">${reverse?`Which definition matches <strong>${esc(x.t)}</strong>?`:`Which term matches this description?<br><em>${esc(x.d)}</em>`}</div>
+    <div class="opts">${opts.map(o=>`<button class="opt" data-k="${esc(o.t)}">${esc(reverse?o.d:o.t)}</button>`).join("")}</div>
+    <div id="fb"></div></div>`;
+  stage.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    const ok = b.dataset.k===x.t;
+    stage.querySelectorAll(".opt").forEach(o=>{ o.disabled=true; if(o.dataset.k===x.t) o.classList.add("right"); });
+    if (ok) qRight++; else { b.classList.add("wrong"); qMissed.push(x); }
+    $("#fb").innerHTML = `<div class="feedback"><strong>${ok?"Correct.":"Not quite."}</strong> ${esc(x.t)}: ${esc(x.d)} ${x.w?esc(x.w):""}</div>
+      <div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn primary" id="next">${qi+1<qs.length?"Next question":"See results"}</button></div>`;
+    status.innerHTML = `<span class="score">Score ${qRight} / ${qi+1}</span>`;
+    $("#next").onclick=()=>{qi++;renderQuiz();}; $("#next").focus();
+  });
+}
+
+/* ---------- Essay prep ---------- */
+let drafts = store.get("h16-drafts", {});
+function renderEssay(){
+  status.textContent = "";
+  stage.innerHTML = `<div style="display:flex;flex-direction:column;gap:16px">
+    <p class="hint" style="margin:0">Write your own outline first, then reveal the key points to see what you missed. Outlines save in this browser.</p>
+    ${ESSAYS.map((e,i)=>`<section class="essay">
+      <div class="num">Question ${i+1}</div>
+      <h3>${esc(e.q)}</h3>
+      <div class="terms">${e.terms.map(t=>`<span class="chip">${esc(t)}</span>`).join("")}</div>
+      <label class="hint" for="draft${i}">Your outline</label>
+      <textarea id="draft${i}" data-i="${i}" placeholder="Thesis, then 2–3 supporting points with specific terms and dates…">${esc(drafts[i]||"")}</textarea>
+      <div><button class="btn" data-reveal="${i}">Show key points</button></div>
+      <ul hidden id="pts${i}">${e.points.map(p=>`<li>${esc(p)}</li>`).join("")}</ul>
+    </section>`).join("")}</div>`;
+  stage.querySelectorAll("textarea").forEach(t=>t.oninput=()=>{drafts[t.dataset.i]=t.value;store.set("h16-drafts",drafts);});
+  stage.querySelectorAll("[data-reveal]").forEach(b=>b.onclick=()=>{
+    const ul=$("#pts"+b.dataset.reveal); ul.hidden=!ul.hidden; b.textContent=ul.hidden?"Show key points":"Hide key points";
+  });
+}
+
+/* ---------- Mode switching ---------- */
+function go(m){
+  mode=m;
+  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected", t.dataset.mode===m));
+  $("#filterBar").querySelector("select").disabled = (m==="essay");
+  ({cards:startCards, match:startMatch, quiz:startQuiz, essay:renderEssay})[m]();
+}
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>go(t.dataset.mode));
+$("#topic").onchange=()=>go(mode);
+document.addEventListener("keydown",e=>{
+  if (mode!=="cards" || e.target.tagName==="TEXTAREA") return;
+  if (e.code==="Space"){ e.preventDefault(); if(deck[idx]) flip(); }
+  if (flipped && e.key==="1") answer(false);
+  if (flipped && e.key==="2") answer(true);
+});
+go("cards");
+</script>
+
+</body></html>
